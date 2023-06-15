@@ -1,0 +1,47 @@
+dlist = set()
+ddict = dict()
+total_females = 0
+total_males = 0
+
+with open("data", "r") as f:
+    for d in f:
+        datum = d.split(",")
+        if len(datum) > 1:
+            dlist.add(datum[0])
+            ddict[datum[0]] = datum[1].replace("\n", "")
+
+
+dlist =  list(dlist)
+dlist.sort()
+
+with open("data", "w") as f:
+    for d in dlist:
+        name = d
+        gender = ddict[d]
+        
+        if gender == "m":
+            total_males += 1
+        if gender == "f":
+            total_females += 1
+        f.write("{},{}\n".format(d, gender))
+
+replace_total = {
+    '{{total_males}}': total_males, 
+    '{{total_females}}': total_females
+}
+
+readme = open("readme.copy", 'r')
+readme_str = readme.read()
+
+for s in replace_total:
+    readme_str = readme_str.replace(s, str(replace_total[s]))
+
+with open("readme", "w") as f:
+    readme_text = readme_str.replace("\\n", "\n", 1)
+    f.write(readme_text)
+
+with open("readme.md", "w") as f:
+    readme_str = readme_str.replace("Names Corpus", "# Names Corpus", 1)
+    readme_str = readme_str.replace("\\n", "")
+    f.write(readme_str)
+print(readme_str)
