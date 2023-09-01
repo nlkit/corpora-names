@@ -38,7 +38,7 @@ readme_str = readme.read()
 for s in replace_total:
     readme_str = readme_str.replace(s, str(replace_total[s]))
 
-with open("readme", "w") as f:
+with open("readme.txt", "w") as f:
     readme_text = readme_str.replace("\\n", "\n", 1)
     f.write(readme_text)
 
